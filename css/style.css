@@ -43,6 +43,10 @@ body {
   text-align: left;
 }
 
+.play-item.active {
+  text-decoration: underline;
+}
+
 .play-item {
   position: relative;
   padding: 5px;
@@ -50,7 +54,7 @@ body {
   list-style: none;
   opacity: .8;
   cursor: pointer;
-  transition: .3s;
+  transition: all .3s ease;
 }
 
 .play-item:hover {
