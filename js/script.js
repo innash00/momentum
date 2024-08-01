@@ -64,6 +64,38 @@ audio.addEventListener('ended', function() {
     playNext();
 })
 
+audio.addEventListener('loadeddata', () => {
+    document.querySelector('.song-time .length').textContent = getTimeCodeFromNum(audio.duration);
+    audio.volume = 0.75;
+    },
+    false
+);
+
+setInterval(() => {
+    const progressBar = document.querySelector(".progress");
+    progressBar.style.width = audio.currentTime / audio.duration * 100 + "%";
+    document.querySelector(".current").textContent = getTimeCodeFromNum(audio.currentTime);
+  }, 500);
+
+
+  const volumeSlider = document.querySelector(".volume-slider");
+volumeSlider.addEventListener('click', e => {
+  const sliderWidth = window.getComputedStyle(volumeSlider).width;
+  const newVolume = e.offsetX / parseInt(sliderWidth);
+  audio.volume = newVolume;
+  document.querySelector(".volume-percentage").style.width = newVolume * 100 + '%';
+}, false)
+
+document.querySelector(".volume-button").addEventListener("click", () => {
+    const volumeEl = document.querySelector(".volume");
+    audio.muted = !audio.muted;
+    if (audio.muted) {
+      volumeEl.style.backgroundImage = "url('../assets/svg/volume-off-stroke-rounded.svg')";
+    } else {
+        volumeEl.style.backgroundImage = "url('../assets/svg/volume.svg')";
+    }
+  });
+
 
 
 
@@ -203,7 +235,7 @@ function getWeatherLS() {
 
 
   async function getQuotes() {
-    const quotes = "quotes.json";
+    const quotes = "assets/quotes.json";
     const res = await fetch(quotes);
     const data = await res.json();
     return data;
@@ -277,3 +309,16 @@ function createSongList() {
         playListConteiner.append(li);
     })
 }
+
+function getTimeCodeFromNum(num) {
+    let seconds = parseInt(num);
+    let minutes = parseInt(seconds / 60);
+    seconds -= minutes * 60;
+    const hours = parseInt(minutes / 60);
+    minutes -= hours * 60;
+  
+    if (hours === 0) return `${minutes}:${String(seconds % 60).padStart(2, 0)}`;
+    return `${String(hours).padStart(2, 0)}:${minutes}:${String(
+      seconds % 60
+    ).padStart(2, 0)}`;
+  }
