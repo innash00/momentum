@@ -330,6 +330,28 @@ body {
   padding: 20px;
 }
 
+.change-lng {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.foto-src {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.conteiner {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .change-quote {
   margin-bottom: 30px;
   background-image: url("../assets/svg/reload.svg");  
